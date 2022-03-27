@@ -1,19 +1,30 @@
 // component manage  Cart
-import CartData from "../data/CartData"
+
 import CartItem from "./CartItem"
+import { MyCartContext } from "../management/context"
 const Cart=()=>{
-    return(
-        <div className="shopping-cart">
-            <div className="title">Cart List</div>
-            {CartData.map((data)=>{
-                return <CartItem key={data.id} {...data} ></CartItem>
-            })}
-
-            <div className="footer">Total</div>
-
-        </div>
-
-    )
+    const {cart,total,formatNumber} = MyCartContext()
+    if(cart.length === 0){
+        //NO cart list
+        return(
+            <div className="shopping-cart">
+                <div className="empty"> Your shopping cart is empty </div>
+            </div>
+        )
+    }else{
+        return(
+            <div className="shopping-cart">
+                <div className="title">Cart List</div>
+                {cart.map((data)=>{
+                    return <CartItem key={data.id} {...data} ></CartItem>
+                })}
+    
+                <div className="footer">Total {formatNumber(total)} Bath</div>
+    
+            </div>
+    
+        )
+    }
 }
 
 export default Cart
